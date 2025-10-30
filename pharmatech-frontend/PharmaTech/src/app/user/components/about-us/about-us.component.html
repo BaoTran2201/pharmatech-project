@@ -1,1 +1,22 @@
-<h3>About Us</h3>
+<!-- About Us -->
+<div class="about-us-container">
+	<h2>About Us</h2>
+
+	<div *ngIf="aboutInfo; else loading">
+		<p>{{ aboutInfo?.message }}</p>
+
+		<p><strong>Email:</strong> <a [href]="'mailto:' + aboutInfo.email">{{ aboutInfo.email }}</a></p>
+		<p><strong>Phone:</strong> <a [href]="'tel:' + aboutInfo.phone">{{ aboutInfo.phone }}</a></p>
+
+		<p>
+			<a *ngIf="aboutInfo.facebook" [href]="aboutInfo.facebook" target="_blank">Facebook</a>
+			<span *ngIf="aboutInfo.facebook && aboutInfo.zalo"> | </span>
+			<a *ngIf="aboutInfo.zalo" [href]="aboutInfo.zalo" target="_blank">Zalo</a>
+		</p>
+	</div>
+
+	<ng-template #loading>
+		<p *ngIf="!error">Loading...</p>
+		<p class="text-danger" *ngIf="error">{{ error }}</p>
+	</ng-template>
+</div>

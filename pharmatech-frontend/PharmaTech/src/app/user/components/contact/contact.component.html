@@ -1,0 +1,47 @@
+<!-- Contact Us -->
+<div class="contact-us-container">
+	<h2>Contact Us</h2>
+
+	<form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+		<div>
+			<label>Name</label>
+			<input formControlName="name" />
+			<div *ngIf="contactForm.get('name')?.touched && contactForm.get('name')?.invalid" class="text-danger">Name is required</div>
+		</div>
+
+		<div>
+			<label>Email</label>
+			<input formControlName="email" />
+			<div *ngIf="contactForm.get('email')?.touched && contactForm.get('email')?.invalid" class="text-danger">Valid email required</div>
+		</div>
+
+		<div>
+			<label>Phone</label>
+			<input formControlName="phone" />
+			<div *ngIf="contactForm.get('phone')?.touched && contactForm.get('phone')?.invalid" class="text-danger">Phone is required</div>
+		</div>
+
+		<div>
+			<label>Facebook (optional)</label>
+			<input formControlName="facebook" />
+		</div>
+
+		<div>
+			<label>Zalo (optional)</label>
+			<input formControlName="zalo" />
+		</div>
+
+		<div>
+			<label>Message</label>
+			<textarea formControlName="message"></textarea>
+			<div *ngIf="contactForm.get('message')?.touched && contactForm.get('message')?.invalid" class="text-danger">Message is required</div>
+		</div>
+
+		<div>
+			<button type="submit" [disabled]="isSubmitting || contactForm.invalid">{{ isSubmitting ? 'Sending...' : 'Send Message' }}</button>
+		</div>
+	</form>
+
+	<div *ngIf="submitSuccess" class="alert alert-success">Contact submitted successfully!</div>
+	<div *ngIf="submitError" class="alert alert-danger">{{ submitError }}</div>
+</div>

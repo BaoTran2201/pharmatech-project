@@ -10,6 +10,7 @@ import { UserComponent } from './user/user.component';
 import { AccountListComponent } from './admin/account/accountlist/accountlist.component';
 import { CategoryListComponent } from './admin/category/categorylist/categorylist.component';
 import { ProductListComponent } from './admin/product/productlist/productlist.component';
+import { ContactComponent } from './user/components/contact/contact.component';
 
 export const routes: Routes = [
   {
@@ -27,6 +28,10 @@ export const routes: Routes = [
   {
     path: 'user/about-us',
     component: AboutUsComponent,
+  },
+  {
+    path: 'user/contact-us',
+    component: ContactComponent,
   },
   {
     path: 'user/news',

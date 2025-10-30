@@ -5,12 +5,15 @@ import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 import { AccountDTO } from './account.dto';
 import { plainToInstance } from 'class-transformer';
+import { Contact } from './schemas/account.schema';
 
 @Injectable()
 export class AccountService {
   constructor(
     @InjectModel(Account.name)
     private accountModel: Model<Account>,
+    @InjectModel('Contact')
+    private contactModel: Model<any>,
   ) {}
 
   async findAll(): Promise<AccountDTO[]> {
@@ -87,6 +90,37 @@ export class AccountService {
     } catch (err) {
       console.log(err);
       return false;
+    }
+  }
+
+  // Contact-related methods (for About/Contact pages)
+  async createContact(data: Partial<Contact>): Promise<any> {
+    const contact = new this.contactModel({ ...data, role: 'user' });
+    return contact.save();
+  }
+
+  async findAllContacts(): Promise<any[]> {
+    return this.contactModel.find({ role: 'user' }).sort({ createdAt: -1 }).exec();
+  }
+
+  async findAdminInfo(): Promise<any> {
+    return this.contactModel.findOne({ role: 'admin' }).exec();
+  }
+
+  // optional initializer to create sample admin if not exists
+  async initializeAdminData(): Promise<void> {
+    const admin = await this.contactModel.findOne({ role: 'admin' }).exec();
+    if (!admin) {
+      await this.contactModel.create({
+        name: 'KAS Company',
+        email: 'info@kas.com',
+        phone: '0123456789',
+        message:
+          'KAS provides professional software deployment and IT solutions.',
+        facebook: 'https://facebook.com/kas.company',
+        zalo: 'https://zalo.me/0123456789',
+        role: 'admin',
+      });
     }
   }
 }

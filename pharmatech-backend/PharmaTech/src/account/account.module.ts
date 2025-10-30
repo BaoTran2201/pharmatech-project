@@ -4,6 +4,8 @@ import { AccountController } from './account.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Account, AccountSchema } from './account.decorator';
 import { MailService } from 'src/mail/mail.service';
+import { ContactSchema } from './schemas/account.schema';
+import { AccountsController } from './accounts.controller';
 
 @Module({
   imports: [
@@ -12,10 +14,14 @@ import { MailService } from 'src/mail/mail.service';
         name: Account.name,
         schema: AccountSchema,
       },
+      {
+        name: 'Contact',
+        schema: ContactSchema,
+      },
     ]),
   ],
   providers: [AccountService, MailService],
-  controllers: [AccountController],
+  controllers: [AccountController, AccountsController],
   exports: [AccountService, MailService],
 })
 export class AccountModule {}

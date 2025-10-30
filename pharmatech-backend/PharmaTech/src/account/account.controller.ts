@@ -53,7 +53,7 @@ export class AccountController {
     return { exists: false }; // chưa tồn tại
   }
 
-  @Post('create')
+  @Post('create') //http://localhost:3000/api/account/create
   async create(@Body() account: Account) {
     account.password = bcrypt.hashSync(account.password, bcrypt.genSaltSync());
     account.is_active = false;
